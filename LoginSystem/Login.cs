@@ -34,7 +34,7 @@ namespace LoginSystem
             Console.WriteLine("Press 2: Create new user");
             Console.WriteLine("Press 3: I Forgot my Password");
             
-            //string userInput = Console.ReadLine();
+            
             switch (Console.ReadLine())
             {
                 case "1":
@@ -52,7 +52,17 @@ namespace LoginSystem
         public void NewUser()
         {
             Console.WriteLine("Type in your Username"); //TODO: should say if user already exist!
+            string inputName = Console.ReadLine();
             Console.WriteLine("Type in your password");
+            string inputPassword = Console.ReadLine();
+
+            users.Add (new User() { Name = inputName, Password = inputPassword });
+
+            Console.WriteLine($"Your user {inputName} is now created");
+            Console.WriteLine("Press a key to login with your new user");
+            Console.ReadKey();
+            ExistingUser();
+
         }
 
         public void ExistingUser()
