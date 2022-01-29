@@ -1,2 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+using LoginSystem;
+
+Login login = new Login();
+
+login.PopulateList();
+login.MainMenu();
+
+Console.ReadKey();
