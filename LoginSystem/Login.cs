@@ -11,7 +11,8 @@ namespace LoginSystem
         User user = new User();
 
         List<User> users = new List<User>();
-        
+
+        User? CurrentUser { get; set; }
      
         public void PopulateList()
         {
@@ -79,7 +80,11 @@ namespace LoginSystem
             foreach (var item in users)
             {
                 if (item.Name == inputName && item.Password == inputPassword)
+                {
                     correctUser = true;
+                    CurrentUser = item;
+                }
+
             }
             if (correctUser == true)
             {
@@ -106,42 +111,87 @@ namespace LoginSystem
         public void SuccessfulLogin()
         {
             Console.Clear();
-            Console.WriteLine(@"
-                                ██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗
+            Console.WriteLine(@"██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗
                                 ██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝
                                 ██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗  
                                 ██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝  
                                 ╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗
                                  ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝
-                                                        
-
                                                 ████████╗ ██████╗ 
                                                 ╚══██╔══╝██╔═══██╗
                                                    ██║   ██║   ██║
                                                    ██║   ██║   ██║
                                                    ██║   ╚██████╔╝
                                                    ╚═╝    ╚═════╝ 
-                                                    
-
                 ████████╗██╗  ██╗███████╗    ██████╗ ██████╗  ██████╗  ██████╗ ██████╗  █████╗ ███╗   ███╗
                 ╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██╔══██╗██╔═══██╗██╔════╝ ██╔══██╗██╔══██╗████╗ ████║
                    ██║   ███████║█████╗      ██████╔╝██████╔╝██║   ██║██║  ███╗██████╔╝███████║██╔████╔██║
                    ██║   ██╔══██║██╔══╝      ██╔═══╝ ██╔══██╗██║   ██║██║   ██║██╔══██╗██╔══██║██║╚██╔╝██║
                    ██║   ██║  ██║███████╗    ██║     ██║  ██║╚██████╔╝╚██████╔╝██║  ██║██║  ██║██║ ╚═╝ ██║
-                   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
-                                                                                          
+                   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝ ");
+            Console.WriteLine($"user is: {CurrentUser.Name}");
 
+            if (CurrentUser.IsAdministrator)
+            {
+                Console.WriteLine("You registered as an administrator");
+                Console.WriteLine("Press 1: to access the admin-interface");
+                if ("1" == Console.ReadLine())
+                {
+                    AdminInterface();
+                }
+            }
 
-                  
-
-
-                                                              
-                                                                           ");
+           
         }
 
         public void AdminInterface()
         {
+            Console.Clear();
+            Console.WriteLine("This is the administrator menu");
 
+            int i = 0;
+            foreach (var item in users)  //maybe easier to read if it said (User user in users) - that would also work. 
+            {
+                 Console.WriteLine($"Press {i} to edit {item.Name}, Administrator: {item.IsAdministrator}");
+                 i++;
+            }
+            AdminEditUSers();
+
+        }
+
+        public void AdminEditUSers()
+        {
+            int userInput = Convert.ToInt32(Console.ReadLine());
+            User user = users[userInput];
+
+            Console.WriteLine($"what do you want to do with user: {user.Name}");
+            Console.WriteLine($"Press 1: Delete {user.Name}");
+            Console.WriteLine($"Press 2: Reset password of {user.Name}");
+            Console.WriteLine($"Press 3: Upgrade {user.Name} to Adminstrator");
+            Console.WriteLine("");
+            Console.WriteLine("Press 4: Back to Admin Interface");
+            Console.WriteLine("Press 5: Back to main menu.");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    users.Remove(user);
+                    break;
+                case "2":
+                    Console.WriteLine("function not implemented yet!");
+                    break;
+                case "3":
+                    user.IsAdministrator = true; //doesn't work
+                    break;
+                case "4":
+                    AdminInterface();
+                    break;
+                case "5":
+                    MainMenu();
+                    break;
+
+            }
+            AdminInterface();
         }
 
         public void ForgotPassword()
