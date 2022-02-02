@@ -33,9 +33,6 @@ void MainMenu()
 }
 
 
-
-//AddItemToList();
-
 void AddItemToList(string name)
 {
     list.Add(name);
@@ -52,27 +49,7 @@ void AddItemToList(string name)
     }
 
 }
-void AddItemToListTEST()
-{
 
-    Console.WriteLine("write names, write 1 to exit");
-    while (Console.ReadLine() != "1")
-    {
-        // userInput = Console.ReadLine();
-        //if ("1" == Console.ReadLine())
-        //{
-        //    MainMenu();
-        //    break;
-        //}
-        //else
-        //{
-        //    list.Add(Console.ReadLine());
-        //}
-
-        list.Add(Console.ReadLine());
-    }
-    MainMenu();
-}
 
    
 
